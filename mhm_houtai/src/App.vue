@@ -1,34 +1,50 @@
 <template>
   <div id="app">
     <el-tabs v-model="activeName" @tab-click="handleClick">
-    <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
-    <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
-    <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-    <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
-  </el-tabs>
+      <el-tab-pane  v-for="item in dblist" :key="item.title" :label="item.title">
+       {{item.title}}
+       <main>
+        <router-view/>
+      </main>
+      </el-tab-pane>
+     
+    </el-tabs>
+     
   </div>
 </template>
 
 <script>
-
 export default {
-  name: 'app',
-   data() {
-      return {
-        activeName: 'second'
-      };
-    },
-    methods: {
-      handleClick(tab, event) {
-        console.log(tab, event);
-      }
+  name: "app",
+  data() {
+    return {
+      dblist: [
+        {
+          title: "client",
+          name:"client",
+          path:"/client",
+
+        },
+        {
+          title: "Phone"
+        },
+        {
+          title: "user"
+        }
+      ]
+    };
+  },
+  methods: {
+    handleClick(tab, event) {
+      console.log(tab, event);
     }
-}
+  }
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

@@ -92,7 +92,12 @@ export default {
           title: "dbslideshow",
           name: "dbslideshow",
           path: "/dbslideshow"
+        }, {
+          title: "dbMMOARPG",
+          name: "dbMMOARPG",
+          path: "/dbMMOARPG"
         }
+        
       ]
 
     };

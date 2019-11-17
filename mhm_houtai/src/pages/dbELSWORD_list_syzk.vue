@@ -41,7 +41,7 @@ export default {
       }
     },
   
-    async created(){
+    /* async created(){
       console.log(111111234);
       
       let {
@@ -52,10 +52,24 @@ export default {
         }
       });
       this.tableData=ELSWORD_list_syzk.map(item=>{
+        console.log(222222);
+        
         return item
       })
-      console.log(ELSWORD_list_syzk);
+      console.log(this.tableData);
       
+    } */
+     async created(){
+      let {
+        data:{data}
+      } = await this.$axios.get(mainUrl + "/goods",{
+        params:{
+          gather:"ELSWORD_list_syzk"
+        }
+      });
+       this.tableData = data.map(item => {
+      return item;
+    });
     }
 }
 </script>

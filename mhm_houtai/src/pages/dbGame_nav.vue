@@ -9,15 +9,7 @@
     </el-table-column>
     <el-table-column prop="address" label="title" show-overflow-tooltip>
     </el-table-column>
-    <el-table-column prop="address" label="region" show-overflow-tooltip>
-    </el-table-column>
-    <el-table-column prop="address" label="inventory" show-overflow-tooltip>
-    </el-table-column>
-    <el-table-column prop="address" label="price" show-overflow-tooltip>
-    </el-table-column>
-    <el-table-column prop="address" label="smSrc1" show-overflow-tooltip>
-    </el-table-column>
-    <el-table-column prop="address" label="smSrc2" show-overflow-tooltip>
+    <el-table-column prop="address" label="theme" show-overflow-tooltip>
     </el-table-column>
      <el-table-column label="操作">
       <template slot-scope="scope">

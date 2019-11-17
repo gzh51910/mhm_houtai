@@ -6,11 +6,12 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 import axios from 'axios';
 import router from './router'
+import dbLink from './plugin'
 Vue.config.productionTip = false
 
 // 使用ElementUI
 Vue.use(ElementUI);
-
+Vue.use(dbLink);
 Vue.prototype.$axios = axios;
 
 

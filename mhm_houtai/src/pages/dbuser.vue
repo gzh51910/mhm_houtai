@@ -1,24 +1,23 @@
 <template>
-    <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange">
+    <el-table ref="multipleTable" :data="tableData"  style="width: 100%">
     <el-table-column type="selection" width="55">
     </el-table-column>
-    <el-table-column label="_id" width="120">
-      <template slot-scope="scope">{{ scope.row.date }}</template>
+    <el-table-column prop="_id" label="_id" width="260">
     </el-table-column>
-    <el-table-column prop="name" label="username" width="120">
+    <el-table-column prop="username" label="username" width="220">
     </el-table-column>
-    <el-table-column prop="address" label="password" show-overflow-tooltip>
+    <el-table-column prop="password" label="password" show-overflow-tooltip>
     </el-table-column>
     
      <el-table-column label="操作">
-      <template slot-scope="scope">
+      <template>
         <el-button
           size="mini"
-          @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          >编辑</el-button>
         <el-button
           size="mini"
           type="danger"
-          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          >删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -26,42 +25,27 @@
 </template>
 
 <script>
-// import { mainUrl } from '../config.json'
+import { mainUrl } from '../config.json'
 export default {
      data() {
       return {
-        tableData: [{
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-08',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-06',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-07',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }],
+        tableData: [],
         multipleSelection: []
       }
     },
+    async created() {
+    //slideshow
+    let {
+      data: { data: user }
+    } = await this.$axios.get(mainUrl + "/goods", {
+      params: {
+        gather: "user"
+      }
+    });
+    this.tableData = user.map(item => {
+      return item;
+    });
+    }
 }
 </script>
 <style lang="scss">

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <el-tabs @tab-click="gotoroute" v-model="number">
-      <el-tab-pane  v-for="item in dblist" :key="item.title" :label="item.title">
+      <el-tab-pane  v-for="item in dblist" :key="item.id" :label="item.title">
        <main>
         <router-view/>
       </main>
@@ -90,6 +90,10 @@ export default {
           title: "dbslideshow",
           name: "dbslideshow",
           path: "/dbslideshow"
+        },{
+          title:'dbuser',
+          name:'dbuser',
+          path:"/dbuser"
         }
       ]
 
@@ -97,7 +101,6 @@ export default {
   },
   methods: {
     gotoroute() {
-      console.log(111)
       this.$router.push(this.dblist[this.number].path)
     }
   }

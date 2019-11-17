@@ -1,6 +1,7 @@
 <template>
     <el-table ref="multipleTable" :data="tableData"  style="width: 100%">
     <el-table-column type="selection" width="55">
+      
     </el-table-column>
     <el-table-column prop="_id" label="_id" width="260">
     </el-table-column>
@@ -21,7 +22,6 @@
       </template>
     </el-table-column>
   </el-table>
-  
 </template>
 
 <script>
@@ -30,10 +30,15 @@ export default {
      data() {
       return {
         tableData: [],
+        loading: true,
+        pages:this.$route.query.url
       }
     },
-    async mounted() {
+    async created() {
     //slideshow
+/*     console.log(activeName); */
+
+    this.$emit("listenToChildEvent",this.$route.query.url)
     let {
       data: { data: user }
     } = await this.$axios.get(mainUrl + "/goods", {

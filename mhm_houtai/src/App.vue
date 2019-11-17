@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <el-tabs @tab-click="gotoroute" v-model="activeName">
-      <el-tab-pane  v-for="item in dblist" :key="item.id" :label="item.title" :name="item.name">
+      <el-tab-pane  v-for="item in dblist" :key="item.title" :label="item.title" :name="item.name">
        <main>
-        <router-view/>
+         {{activeName}}
+        <router-view v-on:listenToChildEvent="showMsgFromChild"/>
       </main>
       </el-tab-pane>
      
@@ -17,7 +18,7 @@ export default {
   name: "app",
   data() {
     return {
-      activeName: '',
+      activeName:"dbClient",
       dblist: [
         {
           title: "dbClient",
@@ -98,8 +99,11 @@ export default {
   },
   methods: {
     gotoroute() {
-      let url = this.activeName
-      this.$router.push("/"+url);
+      let url = this.activeName     
+      this.$router.push({name:url,query:{url}});
+    },
+    showMsgFromChild(data){
+      this.activeName = data;     
     }
   }
 };

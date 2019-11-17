@@ -30,10 +30,9 @@ export default {
      data() {
       return {
         tableData: [],
-        multipleSelection: []
       }
     },
-    async created() {
+    async mounted() {
     //slideshow
     let {
       data: { data: user }

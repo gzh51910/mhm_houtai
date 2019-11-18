@@ -1,15 +1,6 @@
 <template>
   <div id="app">
-    <el-tabs @tab-click="gotoroute" v-model="activeName">
-      <el-tab-pane  v-for="item in dblist" :key="item.title" :label="item.title" :name="item.name">
-       <main>
-         {{activeName}}
-        <router-view v-on:listenToChildEvent="showMsgFromChild"/>
-      </main>
-      </el-tab-pane>
-     
-    </el-tabs>
-     
+    <router-view />
   </div>
 </template>
 
@@ -18,98 +9,11 @@ export default {
   name: "app",
   data() {
     return {
-      activeName:"dbClient",
-      dblist: [
-        {
-          title: "dbClient",
-          name: "dbClient",
-          path: "/dbClient"
-        },
-        {
-          title: "dbPhone",
-          name: "dbPhone",
-          path: "/dbPhone"
-        },
-        {
-          title: "dbuser",
-          name: "dbuser",
-          path: "/dbuser"
-        },
-        {
-          title: "dbELSWORD_list",
-          name: "dbELSWORD_list",
-          path: "/dbELSWORD_list"
-        },
-        {
-          title: "dbELSWORD_list_jywc",
-          name: "dbELSWORD_list_jywc",
-          path: "/dbELSWORD_list_jywc"
-        },
-        {
-          title: "dbELSWORD_list_syzk",
-          name: "dbELSWORD_list_syzk",
-          path: "/dbELSWORD_list_syzk"
-        },
-        {
-          title: "dbGame_nav",
-          name: "dbGame_nav",
-          path: "/dbGame_nav"
-        }
-        ,
-        {
-          title: "dbHearthStone",
-          name: "dbHearthStone",
-          path: "/dbHearthStone"
-        },
-        {
-          title: "dbHomeList",
-          name: "dbHomeList",
-          path: "/dbHomeList"
-        },
-        {
-          title: "dbHonor",
-          name: "dbHonor",
-          path: "/dbHonor"
-        },
-        {
-          title: "dbMolder3rd",
-          name: "dbMolder3rd",
-          path: "/dbMolder3rd"
-        },
-        {
-          title: "dbSkin",
-          name: "dbSkin",
-          path: "/dbSkin"
-        }, {
-          title: "dbfn_nav",
-          name: "dbfn_nav",
-          path: "/dbfn_nav"
-        }, {
-          title: "dbnotice",
-          name: "dbnotice",
-          path: "/dbnotice"
-        }, {
-          title: "dbslideshow",
-          name: "dbslideshow",
-          path: "/dbslideshow"
-        }, {
-          title: "dbMMOARPG",
-          name: "dbMMOARPG",
-          path: "/dbMMOARPG"
-        }
-        
-      ]
-
+      
     };
   },
   methods: {
-    gotoroute() {
-      let url = this.activeName     
-      this.$router.push({name:url,query:{url}});
-    },
-    showMsgFromChild(data){
-      this.activeName = data;     
-    }
+    
   }
 };
 </script>

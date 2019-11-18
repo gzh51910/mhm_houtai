@@ -1,45 +1,45 @@
 <template>
   <div id="app">
     <el-tabs @tab-click="gotoroute" v-model="activeName">
-      <el-tab-pane  v-for="(item,item_index) in dblist" :key="item_index" :label="item.title" :name="item.name">
-       <main >
-         {{activeName}}
-        <!-- <router-view v-on:listenToChildEvent="showMsgFromChild"/> -->
-        <el-table ref="multipleTable" :data="tableData"  style="width: 100%" >
-         
-    <el-table-column type="selection" width="55">
-    </el-table-column>
-    <el-table-column v-for="(list,list_index) in tableData_list" :key="list_index" :prop="list" :label="list">
-    </el-table-column>
-     <el-table-column label="操作">
-      <template  slot-scope="scope">
-        <el-button
-          size="mini"
-          >编辑</el-button>
-        <el-button
-          size="mini"
-          type="danger"
-          @click="deleteButton(scope.row)">删除</el-button>
-      </template>
-    </el-table-column>
-  </el-table>
-      </main>
+      <el-tab-pane
+        v-for="(item,item_index) in dblist"
+        :key="item_index"
+        :label="item.title"
+        :name="item.name"
+      >
+        <main>
+          {{activeName}}
+          <!-- <router-view v-on:listenToChildEvent="showMsgFromChild"/> -->
+          <el-table ref="multipleTable" :data="tableData" style="width: 100%">
+            <el-table-column type="selection" width="55"></el-table-column>
+            <el-table-column
+              v-for="(list,list_index) in tableData_list"
+              :key="list_index"
+              :prop="list"
+              :label="list"
+            ></el-table-column>
+            <el-table-column label="操作">
+              <template slot-scope="scope">
+                <el-button size="mini">编辑</el-button>
+                <el-button size="mini" type="danger" @click="deleteButton(scope.row)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </main>
       </el-tab-pane>
-     
     </el-tabs>
-     
   </div>
 </template>
 
 <script>
-import { mainUrl } from './config.json'
+import { mainUrl } from "./config.json";
 export default {
   name: "app",
   data() {
     return {
-      activeName:"dbClient",
+      activeName: "dbClient",
       tableData: [],
-      tableData_list:[],
+      tableData_list: [],
 
       dblist: [
         {
@@ -76,8 +76,7 @@ export default {
           title: "Game_nav",
           name: "Game_nav",
           path: "/dbGame_nav"
-        }
-        ,
+        },
         {
           title: "HearthStone",
           name: "HearthStone",
@@ -102,66 +101,68 @@ export default {
           title: "Skin",
           name: "Skin",
           path: "/dbSkin"
-        }, {
+        },
+        {
           title: "fn_nav",
           name: "fn_nav",
           path: "/dbfn_nav"
-        }, {
+        },
+        {
           title: "notice",
           name: "notice",
           path: "/dbnotice"
-        }, {
+        },
+        {
           title: "slideshow",
           name: "slideshow",
           path: "/dbslideshow"
+        },
+        {
+          title: "dbMMOARPG",
+          name: "dbMMOARPG",
+          path: "/dbMMOARPG"
         }
-      ],
-      
+      ]
     };
   },
   methods: {
     async gotoroute() {
-/*       let url = this.activeName     
+      /*       let url = this.activeName     
       this.$router.push({name:url,query:{url}}); */
       let {
-      data: { data: Client }
-    } = await this.$axios.get(mainUrl + "/goods", {
-      params: {
-        gather: this.activeName
-      }
-    });
-    this.tableData = Client.map(item => {
-      return item;
-    })
-    this.tableData_list=Object.keys(this.tableData[0]);
-    
-    } ,
-/*     showMsgFromChild(data){
+        data: { data: Client }
+      } = await this.$axios.get(mainUrl + "/goods", {
+        params: {
+          gather: this.activeName
+        }
+      });
+      this.tableData = Client.map(item => {
+        return item;
+      });
+      this.tableData_list = Object.keys(this.tableData[0]);
+    },
+    /*     showMsgFromChild(data){
       this.activeName = data;     
     } */
-    async deleteButton(obj){
-     let id = obj._id
+    async deleteButton(obj) {
+      let id = obj._id;
       try {
-        await this.$axios.delete(mainUrl+"/goods",{
-      params:{
-        gather:this.activeName,
-        _id:id
-      }
+        await this.$axios.delete(mainUrl + "/goods", {
+          params: {
+            gather: this.activeName,
+            _id: id
+          }
         });
-        this.tableData.forEach((ele,idx) => {
-          if(ele["_id"]==id){
-            this.tableData.splice(idx,1);
+        this.tableData.forEach((ele, idx) => {
+          if (ele["_id"] == id) {
+            this.tableData.splice(idx, 1);
           }
         });
       } catch (error) {
         console.log(error);
       }
-
-    
-
-  },
-  },
-  
+    }
+  }
 };
 </script>
 

@@ -2,16 +2,15 @@
     <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange">
     <el-table-column type="selection" width="55">
     </el-table-column>
-    <el-table-column label="_id" width="120">
-      <template slot-scope="scope">{{ scope.row.date }}</template>
+    <el-table-column prop="_id" label="_id" width="220">
     </el-table-column>
-    <el-table-column prop="name" label="src" width="120">
+    <el-table-column prop="src" label="src" width="300">
     </el-table-column>
-    <el-table-column prop="address" label="title" show-overflow-tooltip>
+    <el-table-column prop="title" label="title" show-overflow-tooltip>
     </el-table-column>
-    <el-table-column prop="address" label="thumbs" show-overflow-tooltip>
+    <el-table-column prop="thumbs" label="thumbs" show-overflow-tooltip>
     </el-table-column>
-    <el-table-column prop="address" label="theme" show-overflow-tooltip>
+    <el-table-column prop="theme" label="theme" show-overflow-tooltip>
     </el-table-column>
     
      <el-table-column label="操作">
@@ -30,42 +29,26 @@
 </template>
 
 <script>
-// import { mainUrl } from '../config.json'
+import { mainUrl } from '../config.json'
 export default {
      data() {
       return {
-        tableData: [{
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-08',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-06',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-07',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }],
+        tableData: [],
         multipleSelection: []
       }
     },
+    async created(){
+      let {
+        data:{data}
+      } = await this.$axios.get(mainUrl + "/goods",{
+        params:{
+          gather:"Phone"
+        }
+      });
+       this.tableData = data.map(item => {
+      return item;
+    });
+    }
 }
 </script>
 <style lang="scss">

@@ -13,6 +13,9 @@ let router = new VueRouter({
         name: "login",
         path: "/login",
         component: login
+    }, {
+        path: "/",
+        component: login
     }]
 });
 

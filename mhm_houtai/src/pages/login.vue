@@ -20,12 +20,12 @@
       </el-form-item>
     </el-form>
     <div class="login_login">
-      <i slot="prefx" class="el-icon-arrow-right"></i>
-      <span>立即登录</span>
+      <button @click="submitForm">立即登录</button>
     </div>
   </div>
 </template>
 <script>
+import { mainUrl } from "../config.json";
 export default {
   data() {
     return {
@@ -51,6 +51,44 @@ export default {
         ]
       }
     };
+  },
+  methods: {
+    submitForm() {
+      this.$refs.loginForm.validate(async valid => {
+        if (valid) {
+          //校验成功，发送ajax请求
+          console.log("success");
+          this.$router.push("/main");
+
+          let { username, password } = this.loginForm;
+
+          let result = await this.$axios.get(mainUrl + "/login", {
+            params: {
+              username,
+              password
+            }
+          });
+
+          let { data, headers } = result;
+          console.log(result);
+
+          if (data.status === 0) {
+            this.errorMsg = "用户名或密码错误";
+          } else {
+            let user = data.data;
+
+            user.Authorization = headers.authorization;
+            this.$store.commit("login", user);
+            // localStorage.setItem("Authorization", Authorization);
+            let redirectUrl = this.$route.query.redirectUrl || "/main";
+            this.$router.replace(redirectUrl);
+          }
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    }
   }
 };
 </script>
@@ -121,7 +159,7 @@ export default {
         float: left;
         line-height: 50px;
       }
-      span {
+      button {
         text-align: center;
         width: 250px;
         float: left;
@@ -134,63 +172,6 @@ export default {
       span {
         float: right;
         margin-right: 30px;
-      }
-    }
-    .three {
-      margin-left: 45px;
-      border-top: 1px solid rgb(110, 100, 100);
-      width: 320px;
-      a {
-        text-decoration: none;
-        color: white;
-      }
-      .QQ {
-        background-color: #4099ff;
-        width: 320px;
-        display: inline-block;
-        height: 50px;
-        line-height: 50px;
-        margin-top: 20px;
-        border-radius: 5px;
-        .qq {
-          background-color: #0b70e281;
-          width: 50px;
-          height: 50px;
-          text-align: center;
-          float: left;
-          line-height: 50px;
-          color: white;
-          font-size: 20px;
-        }
-        span {
-          text-align: center;
-          width: 250px;
-          float: left;
-        }
-      }
-      .xinlang {
-        background-color: #cc230d;
-        width: 315px;
-        display: inline-block;
-        height: 50px;
-        line-height: 50px;
-        margin-top: 20px;
-        border-radius: 5px;
-        .lang {
-          background-color: #941b0b77;
-          width: 50px;
-          height: 50px;
-          text-align: center;
-          float: left;
-          line-height: 50px;
-          color: white;
-          font-size: 20px;
-        }
-        span {
-          text-align: center;
-          width: 250px;
-          float: left;
-        }
       }
     }
   }

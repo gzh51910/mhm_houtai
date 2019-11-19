@@ -1,5 +1,6 @@
 <template>
   <div id="main">
+    <span class="span1" @click="ToLogin">退出登录</span>
     <el-tabs @tab-click="gotoroute" v-model="activeName">
       <el-tab-pane
         v-for="(item,item_index) in dblist"
@@ -9,12 +10,7 @@
       >
         <main>
           {{activeName}}
-          <el-button
-            type="success"
-            style="float:right"
-            size="mini"
-            @click="open_add()"
-          >添加信息</el-button>
+          <el-button type="success" style="float:right" size="mini" @click="open_add()">添加信息</el-button>
           <!-- <router-view v-on:listenToChildEvent="showMsgFromChild"/> -->
           <el-table ref="multipleTable" :data="tableData" style="width: 100%">
             <el-table-column type="selection" width="55"></el-table-column>
@@ -67,7 +63,7 @@ export default {
       tableData_list: [],
       dialogFormVisible: false,
       form: {},
-      form2:[],
+      form2: [],
       formLabelWidth: "120px",
       dblist: [
         {
@@ -154,35 +150,49 @@ export default {
     };
   },
   methods: {
-      open_add(){
-          this.form2=[];
-          this.dialogFormVisible=true;
-          this.tableData_list.forEach((ele,idx)=>{
-              if(idx>0){
-                  this.form[ele];
-                  this.form2.push(ele)
-              }
-          })
-      },
-   async text_none(quxiao) {
+    ToLogin() {
+      this.$router.push("/login");
+    },
+    open_add() {
+      this.form2 = [];
+      this.dialogFormVisible = true;
+      this.tableData_list.forEach((ele, idx) => {
+        if (idx > 0) {
+          this.form[ele];
+          this.form2.push(ele);
+        }
+      });
+    },
+    async text_none(quxiao) {
       if (quxiao == 1) {
         this.form = {};
         this.dialogFormVisible = false;
-      }else {     
-        //   let obj="{"
-        //   for(let key in this.form){
-        //       obj += `${key}:'${this.form[key]}',`
-        //   }
-        //   obj+="}"
-          await this.$axios.get(mainUrl+'/goods/s',{
-              params:{
-                  gather:this.activeName,
-                  info:this.form
-              }
-          })
+      } else {
+        let {
+          src,
+          title,
+          region,
+          inventory,
+          price,
+          smSrc1,
+          smSrc2
+        } = this.form;
+
+        await this.$axios.get(mainUrl + "/goods/s", {
+          params: {
+            gather: this.activeName,
+            src,
+            title,
+            region,
+            inventory,
+            price,
+            smSrc1,
+            smSrc2
+          }
+        });
         this.$message({
-          message: '添加成功',
-          type: 'success'
+          message: "添加成功",
+          type: "success"
         });
         this.form = {};
         this.dialogFormVisible = false;
@@ -193,7 +203,9 @@ export default {
         data: { data }
       } = await this.$axios.get(mainUrl + "/goods", {
         params: {
-          gather: this.activeName
+          gather: this.activeName,
+          page: 1,
+          size: 100
         }
       });
       this.tableData = data;
@@ -244,7 +256,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -252,5 +264,18 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+#main {
+  position: relative;
+  .span1 {
+    width: 80px;
+    height: 35px;
+    position: absolute;
+    top: 55px;
+    right: 100px;
+    background-color: red;
+    line-height: 35px;
+    border-radius: 5px;
+  }
 }
 </style>
